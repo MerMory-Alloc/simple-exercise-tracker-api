@@ -7,6 +7,18 @@ const db = process.env.MONGO_URI
 
 mongoose.connect(db);
 
+const exerciseSchema = new mongoose.Schema({
+    description: {
+        type: String,
+        required: true
+    },
+    duration: {
+    type: Number,
+    required: true
+    }, 
+    date: Date
+});
+
 const userSchema = new mongoose.Schema({
     _id: {
       type: mongoose.ObjectId,
@@ -16,7 +28,8 @@ const userSchema = new mongoose.Schema({
     username: {
       type: String,
       required: true,
-    }
+    },
+    exercises:[exerciseSchema],
   });
 
 

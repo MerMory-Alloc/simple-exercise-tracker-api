@@ -1,4 +1,5 @@
-const {createUser, getAllUsers} = require('./userController');
+const {createUser, getAllUsers, createExercise} = require('./userController');
+
 
 const express = require('express');
 
@@ -40,6 +41,30 @@ app.post('/api/users', async (req, res) => {
         console.error('Error handling POST request:', error);
         res.status(500).json({ error: 'Internal Server Error' });
       }
+  });
+
+
+// Route to handle POST request for creating a new exercise for a user
+app.post('/api/users/:_id/exercises', async (req, res) => {
+    try {
+      const { _id } = req.params;
+      const { description, duration, date } = req.body;
+  
+      if (!description || !duration) {
+        return res.status(400).json({ error: 'Description and duration are required' });
+      }
+
+      const created_exercise = await createExercise(_id,description,duration,date);
+
+      if (!created_exercise) {
+        return res.status(404).json({ error: 'User not found' });
+      }
+  
+      res.status(200).json(created_exercise);
+    } catch (error) {
+      console.error('Error handling POST request for exercises:', error);
+      res.status(500).json({ error: 'Internal Server Error' });
+    }
   });
 
 // Handle 404 errors
