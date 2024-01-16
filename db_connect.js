@@ -16,7 +16,7 @@ const exerciseSchema = new mongoose.Schema({
     type: Number,
     required: true
     }, 
-    date: Date
+    date: String
 });
 
 const userSchema = new mongoose.Schema({
@@ -29,6 +29,7 @@ const userSchema = new mongoose.Schema({
       type: String,
       required: true,
     },
+    count: Number,
     exercises:[exerciseSchema],
   });
 
